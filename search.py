@@ -45,14 +45,12 @@ if __name__ == "__main__":
     columnName = 'Author'
 
   elif param[1] == '-k':
-    columnName = 'Keyword'
-
-    print u"未実装"
+    columnName = 'terms'
 
   else:
     print '-t : title'
     print '-a : author'
-    print '-k : keyword'
+    print '-k : terms'
 
   searchWord = '%' + param[2] + '%'
   for results in cur.execute("SELECT FileName, Title, Author FROM paperIndex WHERE %s LIKE '%s'" % (columnName, searchWord)):
