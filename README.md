@@ -1,6 +1,4 @@
-PaperSearch
-
-====
+#PaperSearch
 
 ##Overview
 You can search paper (JNMR & MER).
