@@ -6,11 +6,19 @@ import sys
 
 def openPDF(selfFileName):
   print '----------------------------------'
-  print u"開きたいファイル番号を指定してください"
-  
-  inputFileNum = raw_input()
-  os.system('C:/Users/b1012046/python/paperSearch/pdf/' + selfFileName[int(inputFileNum) - 1])
 
+  if len(selfFileName) == 0:
+    print 'Not found!'
+    quit()
+
+  else:
+    print u"開きたいファイル番号を入力、またはシステムの終了(n)"
+    inputFileNum = raw_input()
+    if inputFileNum.isdigit():
+      os.system('C:/Users/b1012046/python/paperSearch/pdf/' + selfFileName[int(inputFileNum) - 1])
+      quit()
+    else:
+      quit()
 
 def printResults(fileNum, results):
   
@@ -33,30 +41,41 @@ if __name__ == "__main__":
   cur = con.cursor()
 
   param = sys.argv
+  paramLen = len(param)
 
   columnName = ""
   fileNum = 1
   selfFileName = []
 
-  if param[1] == '-t':
-    columnName = 'Title'
+  if paramLen <= 2:
+    print 'Usage : python search.py -t hogehoge'
+    print '        -t (title)'
+    print '        -a (author)'
+    print '        -k (terms)'
+    quit()
 
-  elif param[1] == '-a':
-    columnName = 'Author'
+  else:  
+    if param[1] == '-t':
+      columnName = 'Title'
 
-  elif param[1] == '-k':
-    columnName = 'terms'
+    elif param[1] == '-a':
+      columnName = 'Author'
 
-  else:
-    print '-t : title'
-    print '-a : author'
-    print '-k : terms'
+    elif param[1] == '-k':
+      columnName = 'terms'
 
-  searchWord = '%' + param[2] + '%'
-  for results in cur.execute("SELECT FileName, Title, Author FROM paperIndex WHERE %s LIKE '%s'" % (columnName, searchWord)):
-    selfFileName.append(str(results).split(",")[0].lstrip("(u'").rstrip("txt',)") + "pdf")
-    printResults(fileNum, results)
-    fileNum += 1
+    else:
+      print 'Usage : python search.py -t hogehoge'
+      print '        -t (title)'
+      print '        -a (author)'
+      print '        -k (terms)'
+      quit()
+  
+    searchWord = '%' + param[2] + '%'
+    for results in cur.execute("SELECT FileName, Title, Author FROM paperIndex WHERE %s LIKE '%s'" % (columnName, searchWord)):
+      selfFileName.append(str(results).split(",")[0].lstrip("(u'").rstrip("txt',)") + "pdf")
+      printResults(fileNum, results)
+      fileNum += 1
 
   openPDF(selfFileName)
 
