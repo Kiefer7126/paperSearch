@@ -2,8 +2,8 @@ PaperSearch
 
 ====
 
-Overview
-* You can search paper (JNMR & MER).
+##Overview
+You can search paper (JNMR & MER).
 
 ##Usage
 * Launch the Command Prompt.
@@ -15,4 +15,4 @@ Overview
 * If you want to open PDF file, you type file number.
 
 ##Author
-* Sawada Shun
+Sawada Shun
